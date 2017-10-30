@@ -3,7 +3,7 @@ from pygame.locals import *
 from random import choice
 from copy import deepcopy
 
-
+NAME_OF_THE_GAME = "Cuatrix"
 BLOCK_SIZE = 30
 SPACE_BETWEEN_BLOCKS = 0
 
@@ -340,6 +340,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode(coord_in_px(SCREEN_SIZE))
+        pygame.display.set_caption(NAME_OF_THE_GAME)
         pygame.key.set_repeat(1,160)
         self.core = GameCore()
         self.running = True
