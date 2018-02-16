@@ -442,12 +442,13 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            
+            if event.type == KEYDOWN and event.key == K_r:
+                self.__init__()
                 
             if self.core.game_goes_on:
 
                 if event.type == KEYDOWN:
-                    if event.key == K_r:
-                        self.__init__()
                     if event.key == K_UP:
                         self.core.rotate_player()
                     if event.key == K_DOWN:
