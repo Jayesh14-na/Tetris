@@ -34,7 +34,6 @@ GAME_OVER_TEXT_COLOR = (255,0,0)
 
 FPS = 60
 LOWER_PIECE_EVENT_ID = USEREVENT+1
-CUATRIX_FLASH_START_EVENT_ID = USEREVENT + 2
 
 
 class Piece:
@@ -205,10 +204,6 @@ class GameCore:
     def cemetery_call(self, number):
         """The cemetery uses this method when it clears lines"""
         self.score.add_lines(number)
-        if number == 4:
-            event_cuatrix = pygame.event.Event(CUATRIX_FLASH_START_EVENT_ID)
-            pygame.event.post(event_cuatrix)
-
 
     def move_piece_to_limit(self, coord):
         """It lowers the piece to the bottom in one movement,
@@ -307,23 +302,12 @@ class Clock:
         self.fps = FPS
         self.lower_piece_data = {n:int(48 - 2.4 * n) for n in range(21)}
         self.time_accumulated_to_lower_piece = 0
-        self.cuatrix_flash_length = 2000//FPS
-        self.cuatrix_flash_remaining = 0
-    lower_piece_every = property(lambda self: self.lower_piece_data[self.score.level] or 2)
 
-    def start_cuatrix_flash_countdown(self):
-        self.cuatrix_flash_remaining = self.cuatrix_flash_length
+    lower_piece_every = property(lambda self: self.lower_piece_data[self.score.level] or 2)
 
     def tick(self):
         elapsed_time = self.clock.tick(self.fps)
-        self.process_cuatrix_flash(elapsed_time)
         self.process_lower_piece(elapsed_time)
-
-    def process_cuatrix_flash(self, elapsed_time):
-        if self.cuatrix_flash_remaining:
-            self.cuatrix_flash_remaining -= elapsed_time
-            if self.cuatrix_flash_remaining < 0:
-                self.cuatrix_flash_remaining = 0
 
     def process_lower_piece(self, elapsed_time):
         self.time_accumulated_to_lower_piece += elapsed_time
@@ -358,8 +342,6 @@ class Game:
 
     def draw_game(self):
         self.screen.fill((0, 0, 0))
-        if self.clock.cuatrix_flash_remaining:
-            self.draw_cuatrix_flash()
         if DRAW_SPOTLIGHT:
             self.draw_spotlight()
         self.draw_pieces()
@@ -376,16 +358,7 @@ class Game:
         txt_pos = list(coord_in_px(position))
         text = self.font.render(text, True, color)
         txt_pos[0] -= text.get_width()//2
-        self.screen.blit(text, txt_pos)
-
-    def draw_cuatrix_flash(self):
-        #rect = Rect(STAGE_MARGIN, (RIGHT_SIDE_MARGIN-1, AREA_MARGIN+STAGE_HEIGHT))
-        cuatrix_flash_color = [(0, 0, 0), (255, 255, 255)][bool(self.clock.cuatrix_flash_remaining)]
-        top_left = coord_in_px((AREA_MARGIN, AREA_MARGIN))
-        bottom_right = coord_in_px((AREA_MARGIN + STAGE_WIDTH, AREA_MARGIN + STAGE_HEIGHT))
-        pygame.draw.rect(self.screen, cuatrix_flash_color, (top_left,bottom_right))
-        
-
+        self.screen.blit(text, txt_pos)    
 
     def draw_number_of_lines(self):
         self.render_text("LINES", (14.5, 1.5), TITLE_COLOR)
@@ -466,9 +439,6 @@ class Game:
                             self.core.move_piece_to_limit((0,1))
                 if event.type == LOWER_PIECE_EVENT_ID:
                     self.core.move_player( (0,1) )
-                if event.type == CUATRIX_FLASH_START_EVENT_ID:
-                    self.clock.start_cuatrix_flash_countdown()
-                    print("CUATRIX_FLASH_START_EVENT_ID in handle_events")
 
 
 
