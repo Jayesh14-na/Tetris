@@ -3,7 +3,7 @@ from pygame.locals import *
 from random import choice
 from copy import deepcopy
 
-NAME_OF_THE_GAME = "Cuatrix"
+NAME_OF_THE_GAME = "Tetris"
 BLOCK_SIZE = 30
 SPACE_BETWEEN_BLOCKS = 0
 
