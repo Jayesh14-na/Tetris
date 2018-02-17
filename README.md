@@ -1,2 +1,2 @@
-# Cuatrix
-A Tetris game made with pygame.
+s# Tetris
+A Tetris game made with Python and Pygame.
