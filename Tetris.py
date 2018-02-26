@@ -342,14 +342,14 @@ class Game:
 
     def draw_game(self):
         self.screen.fill((0, 0, 0))
+        if not self.core.game_goes_on:
+            self.draw_game_over()
         if DRAW_SPOTLIGHT:
             self.draw_spotlight()
         self.draw_pieces()
         self.draw_number_of_lines()
         self.draw_score()
         self.draw_level_number()
-        if not self.core.game_goes_on:
-            self.draw_game_over()
         self.draw_next_piece()
         self.draw_borders()
         pygame.display.flip()
@@ -416,7 +416,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             
-            if event.type == KEYDOWN and event.key == K_r:
+            if event.type == KEYDOWN and event.key in (K_r, K_RETURN):
                 self.__init__()
                 
             if self.core.game_goes_on:
