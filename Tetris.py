@@ -43,7 +43,7 @@ class Piece:
     contains capacity to move and rotate."""
     pieces = {
         "L":{"color" : (128, 94, 0),
-             "offset": (-1,0), # used to center the piece when it appears on screen
+             "offset": -1, # used to center the piece when it appears on screen
              "shape" : [[0,1,0],
                         [0,1,0],
                         [0,1,1]]},
@@ -55,7 +55,7 @@ class Piece:
                         [1,1,0]]},
         
         "I":{"color" : (0, 128, 128),
-             "offset": (-1,0),
+             "offset": -1,
              "shape" : [[0,0,1,0,0],
                         [0,0,1,0,0],
                         [0,0,1,0,0],
@@ -96,7 +96,7 @@ class Piece:
 
     def offset_piece(self):
         if "offset" in self.pieces[self.name].keys():
-            self.move(self.pieces[self.name]["offset"])
+            self.move([self.pieces[self.name]["offset"], 0])
 
     def update_blocks(self):
         r = []
@@ -159,13 +159,13 @@ class GameCore:
         self.player.offset_piece()
         self.next_piece = Piece()
         self.score = Score()
-        self.cemetery = Cemetery(self)
+        self.bottom_pieces = BottomPieces(self)
 
         
 
-    def player_oversteps_cemetery(self):
+    def player_oversteps_bottom_pieces(self):
         for coord in self.player.blocks:
-            if coord in self.cemetery:
+            if coord in self.bottom_pieces:
                 return True
         return False
 
@@ -177,7 +177,7 @@ class GameCore:
         return False
 
     def player_oversteps(self):
-        return self.player_oversteps_border() or self.player_oversteps_cemetery()
+        return self.player_oversteps_border() or self.player_oversteps_bottom_pieces()
 
     def move_player(self, coord):
         self.player.move(coord)
@@ -193,16 +193,16 @@ class GameCore:
 
     def change_player(self):
         if self.game_goes_on:
-            self.cemetery.append(self.player)
+            self.bottom_pieces.append(self.player)
             self.player = self.next_piece
             self.player.set_position(list(PIECE_STAGE_STARTING_POSITION))
             self.next_piece = Piece()
-            self.cemetery.check_rows()
-            if self.player_oversteps_cemetery():
+            self.bottom_pieces.check_rows()
+            if self.player_oversteps_bottom_pieces():
                 self.game_goes_on = False
 
-    def cemetery_call(self, number):
-        """The cemetery uses this method when it clears lines"""
+    def bottom_pieces_call(self, number):
+        """BottomPieces uses this method when it clears lines"""
         self.score.add_lines(number)
 
     def move_piece_to_limit(self, coord):
@@ -232,14 +232,14 @@ class GameCore:
 
 
 
-class Cemetery(list):
+class BottomPieces(list):
     "contains the bottom pieces of the game"
     def __init__(self, game_core):
-        super(Cemetery, self).__init__()
+        super(BottomPieces, self).__init__()
         self.game_core = game_core
 
     def __contains__(self, element):
-        if super(Cemetery, self).__contains__(element):
+        if super(BottomPieces, self).__contains__(element):
             return True
         else:
             for piece in self:
@@ -262,7 +262,7 @@ class Cemetery(list):
 
         lines_cleared = blocks_deleated // (STAGE_WIDTH + 1)
         if lines_cleared:
-            self.game_core.cemetery_call(lines_cleared)
+            self.game_core.bottom_pieces_call(lines_cleared)
 
     def delete_row(self, row):
         blocks_deleated = 0
@@ -398,7 +398,7 @@ class Game:
 
     def draw_pieces(self):
         self.draw_piece(self.core.player)
-        for piece in self.core.cemetery:
+        for piece in self.core.bottom_pieces:
             self.draw_piece(piece)
 
     def draw_borders(self):
