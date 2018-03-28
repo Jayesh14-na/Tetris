@@ -134,7 +134,6 @@ class Piece:
         for block in self.blocks:
             block[0] += coord[0]
             block[1] += coord[1]
-           
 
     def __iter__(self):
         for block in self.blocks:
@@ -160,8 +159,6 @@ class GameCore:
         self.next_piece = Piece()
         self.score = Score()
         self.bottom_pieces = BottomPieces(self)
-
-        
 
     def player_oversteps_bottom_pieces(self):
         for coord in self.player.blocks:
@@ -233,7 +230,6 @@ class GameCore:
 
 
 class BottomPieces(list):
-    "contains the bottom pieces of the game"
     def __init__(self, game_core):
         super(BottomPieces, self).__init__()
         self.game_core = game_core
