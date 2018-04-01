@@ -24,8 +24,8 @@ STAGE_TOP_LEFT = STAGE_MARGIN
 STAGE_BOTTOM_RIGHT = (STAGE_MARGIN[0] + STAGE_WIDTH, STAGE_MARGIN[1] + STAGE_HEIGHT)
 
 BORDER_COLOR = (160,160,160)
-BORDER_WIDTH = 1 #the borders sourrounding areas
-DRAW_SPOTLIGHT = True # the spotlight is a guide the width of the player piece that extends to where it would fall.
+BORDER_WIDTH = 1 #the borders surrounding areas
+DRAW_SPOTLIGHT = True # the spotlight is a guide the width of the player that extends to where it would fall.
 SPOTLIGHT_COLOR = (15,15,15)
 TITLE_COLOR = (0, 64, 128)
 TEXT_COLOR = (255,255,255)
