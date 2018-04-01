@@ -11,16 +11,16 @@ def coord_in_px(coord):
     return (coord[0] * BLOCK_SIZE + SPACE_BETWEEN_BLOCKS * (coord[0]+1),
             coord[1] * BLOCK_SIZE + SPACE_BETWEEN_BLOCKS * (coord[1]+1))
 
-AREA_MARGIN = 1
+
 STAGE_WIDTH = 9 # STAGE_WIDTH + 1 == number of collumns
 STAGE_HEIGHT = 17 # STAGE_HEIGHT + 1 == number of rows
-RIGHT_AREA_WIDTH = 5
+STAGE_MARGIN = (1,1)
+BOARD_WIDTH = 5 # the board shows the next piece, the score and lines
 
-STAGE_MARGIN = (AREA_MARGIN,AREA_MARGIN)
 PIECE_STAGE_STARTING_POSITION = (4,0)
-RIGHT_SIDE_MARGIN = (AREA_MARGIN*3 + STAGE_WIDTH, AREA_MARGIN)
-NEXT_PIECE_POSITION = (RIGHT_SIDE_MARGIN[0] + 0.5, RIGHT_SIDE_MARGIN[1] + 12)
-SCREEN_SIZE = (AREA_MARGIN * 4 + STAGE_WIDTH + RIGHT_AREA_WIDTH  , STAGE_HEIGHT+1 + AREA_MARGIN * 2)
+BOARD_MARGIN = (STAGE_WIDTH+3, STAGE_MARGIN[1])
+NEXT_PIECE_POSITION = (BOARD_MARGIN[0] + 0.5, BOARD_MARGIN[1] + 12)
+SCREEN_SIZE = (BOARD_MARGIN[0] + BOARD_WIDTH + 1   , STAGE_HEIGHT + 3)
 STAGE_TOP_LEFT = STAGE_MARGIN
 STAGE_BOTTOM_RIGHT = (STAGE_MARGIN[0] + STAGE_WIDTH, STAGE_MARGIN[1] + STAGE_HEIGHT)
 
@@ -401,8 +401,8 @@ class Game:
         stage_rect = Rect(coord_in_px(STAGE_TOP_LEFT), coord_in_px(STAGE_BOTTOM_RIGHT))
         pygame.draw.rect(self.screen, BORDER_COLOR, stage_rect, BORDER_WIDTH)
 
-        right_area_top_left = RIGHT_SIDE_MARGIN
-        right_area_bottom_right = (RIGHT_AREA_WIDTH, AREA_MARGIN + STAGE_HEIGHT)
+        right_area_top_left = BOARD_MARGIN
+        right_area_bottom_right = (BOARD_WIDTH, STAGE_HEIGHT+1)
         right_area_rect = Rect(coord_in_px(right_area_top_left), coord_in_px(right_area_bottom_right))
         pygame.draw.rect(self.screen, BORDER_COLOR, right_area_rect, BORDER_WIDTH)
 
