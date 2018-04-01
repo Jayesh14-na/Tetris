@@ -358,7 +358,7 @@ class Game:
 
     def draw_number_of_lines(self):
         self.render_text("LINES", (BOARD_CENTER_X, 1.5), TITLE_COLOR)
-        self.render_text(str(self.core.score.lines), (14.5, 2.5), TEXT_COLOR)
+        self.render_text(str(self.core.score.lines), (BOARD_CENTER_X, 2.5), TEXT_COLOR)
 
     def draw_level_number(self):
         self.render_text("LEVEL", (BOARD_CENTER_X, 4.5), TITLE_COLOR)
