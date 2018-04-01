@@ -14,10 +14,11 @@ def coord_in_px(coord):
 STAGE_WIDTH = 9 # stage is where the game takes place.
 STAGE_HEIGHT = 17
 STAGE_MARGIN = (1,1)
-BOARD_WIDTH = 5 # the board shows the next piece, the score and lines
+BOARD_WIDTH= 5 # the board shows the next piece, the score and lines
+BOARD_MARGIN = (STAGE_WIDTH+3, STAGE_MARGIN[1])
+BOARD_CENTER_X = BOARD_MARGIN[0] + BOARD_WIDTH/2
 
 PIECE_STAGE_STARTING_POSITION = (4,0)
-BOARD_MARGIN = (STAGE_WIDTH+3, STAGE_MARGIN[1])
 NEXT_PIECE_POSITION = (BOARD_MARGIN[0] + 0.5, BOARD_MARGIN[1] + 12)
 SCREEN_SIZE = (BOARD_MARGIN[0] + BOARD_WIDTH + 1   , STAGE_HEIGHT + 3)
 STAGE_TOP_LEFT = STAGE_MARGIN
@@ -356,23 +357,23 @@ class Game:
         self.screen.blit(text, txt_pos)    
 
     def draw_number_of_lines(self):
-        self.render_text("LINES", (14.5, 1.5), TITLE_COLOR)
+        self.render_text("LINES", (BOARD_CENTER_X, 1.5), TITLE_COLOR)
         self.render_text(str(self.core.score.lines), (14.5, 2.5), TEXT_COLOR)
 
     def draw_level_number(self):
-        self.render_text("LEVEL", (14.5, 4.5), TITLE_COLOR)
-        self.render_text(str(self.core.score.level), (14.5, 5.5), TEXT_COLOR)
+        self.render_text("LEVEL", (BOARD_CENTER_X, 4.5), TITLE_COLOR)
+        self.render_text(str(self.core.score.level), (BOARD_CENTER_X, 5.5), TEXT_COLOR)
 
     def draw_score(self):
-        self.render_text("SCORE", (14.5, 7.5), TITLE_COLOR)
-        self.render_text(str(self.core.score.score), (14.5, 8.5), TEXT_COLOR)
+        self.render_text("SCORE", (BOARD_CENTER_X, 7.5), TITLE_COLOR)
+        self.render_text(str(self.core.score.score), (BOARD_CENTER_X, 8.5), TEXT_COLOR)
  
     def draw_game_over(self):
-        self.render_text("GAME OVER", (14.5, 10.5), GAME_OVER_TEXT_COLOR)
+        self.render_text("GAME OVER", (BOARD_CENTER_X, 10.5), GAME_OVER_TEXT_COLOR)
 
     
     def draw_next_piece(self):
-        self.render_text("NEXT PIECE", (14.5, 12.5), TITLE_COLOR)
+        self.render_text("NEXT PIECE", (BOARD_CENTER_X, 12.5), TITLE_COLOR)
         self.draw_piece(self.core.next_piece)
 
     def draw_piece(self, piece):
