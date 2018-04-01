@@ -5,15 +5,14 @@ from copy import deepcopy
 
 NAME_OF_THE_GAME = "Tetris"
 BLOCK_SIZE = 30
-SPACE_BETWEEN_BLOCKS = 0
 
 def coord_in_px(coord):
-    return (coord[0] * BLOCK_SIZE + SPACE_BETWEEN_BLOCKS * (coord[0]+1),
-            coord[1] * BLOCK_SIZE + SPACE_BETWEEN_BLOCKS * (coord[1]+1))
+    return (coord[0] * BLOCK_SIZE,
+            coord[1] * BLOCK_SIZE)
 
 
-STAGE_WIDTH = 9 # STAGE_WIDTH + 1 == number of collumns
-STAGE_HEIGHT = 17 # STAGE_HEIGHT + 1 == number of rows
+STAGE_WIDTH = 9 # stage is where the game takes place.
+STAGE_HEIGHT = 17
 STAGE_MARGIN = (1,1)
 BOARD_WIDTH = 5 # the board shows the next piece, the score and lines
 
