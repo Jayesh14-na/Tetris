@@ -420,20 +420,20 @@ class Game:
                 if event.type == KEYDOWN:
                     if event.key == K_UP:
                         self.core.rotate_player()
-                    if event.key == K_DOWN:
+                    elif event.key == K_DOWN:
                         self.core.move_player( (0,1) )
-                    if event.key == K_RIGHT:
+                    elif event.key == K_RIGHT:
                         self.core.move_player( (1,0) )
-                    if event.key == K_LEFT:
+                    elif event.key == K_LEFT:
                         self.core.move_player( (-1,0) )
-                    if event.key == K_SPACE:
+                    elif event.key == K_SPACE:
                         if keys_pressed[K_RIGHT]:
                             self.core.move_piece_to_limit((1,0))
                         elif keys_pressed[K_LEFT]:
                             self.core.move_piece_to_limit((-1,0))
                         else:
                             self.core.move_piece_to_limit((0,1))
-                if event.type == LOWER_PIECE_EVENT_ID:
+                elif event.type == LOWER_PIECE_EVENT_ID:
                     self.core.move_player( (0,1) )
 
 
