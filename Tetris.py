@@ -48,7 +48,6 @@ class Piece:
                         [0,1,0],
                         [0,1,1]]},
 
-
         "J":{"color":  (0, 0, 128),
               "shape": [[0,1,0],
                         [0,1,0],
@@ -226,9 +225,6 @@ class GameCore:
 
 
 
-
-
-
 class BottomPieces(list):
     def __init__(self, game_core):
         super(BottomPieces, self).__init__()
@@ -311,7 +307,6 @@ class Clock:
             self.time_accumulated_to_lower_piece = 0
             event_lower_piece = pygame.event.Event(LOWER_PIECE_EVENT_ID)
             pygame.event.post(event_lower_piece)
-
 
 
 
@@ -435,7 +430,6 @@ class Game:
                             self.core.move_piece_to_limit((0,1))
                 elif event.type == LOWER_PIECE_EVENT_ID:
                     self.core.move_player( (0,1) )
-
 
 
 
