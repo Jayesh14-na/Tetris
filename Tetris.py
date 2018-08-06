@@ -31,6 +31,7 @@ SPOTLIGHT_COLOR = (15,15,15)
 TITLE_COLOR = (0, 64, 128)
 TEXT_COLOR = (255,255,255)
 GAME_OVER_TEXT_COLOR = (255,0,0)
+PAUSE_TEXT_COLOR = (255,255,255)
 
 FPS = 60
 LOWER_PIECE_EVENT_ID = USEREVENT+1
@@ -152,12 +153,18 @@ class Piece:
 class GameCore:
     """Manages the interaction between the player and movement, margins, lower pieces, score, next piece and level."""
     def __init__(self, piece_name = None):
-        self.game_goes_on = True
+        self.playing = True
+        self.paused = False
+        self.game_over = False
         self.player = Piece(piece_name, list(PIECE_STAGE_STARTING_POSITION))
         self.player.offset_piece()
         self.next_piece = Piece()
         self.score = Score()
         self.bottom_pieces = BottomPieces(self)
+
+    def set_paused(self, pause = None):
+        self.paused = pause if pause != None else not self.paused
+        self.playing = not self.paused and not self.game_over
 
     def player_oversteps_bottom_pieces(self):
         for coord in self.player.blocks:
@@ -188,14 +195,15 @@ class GameCore:
             self.player.rotate_ccw()
 
     def change_player(self):
-        if self.game_goes_on:
+        if self.playing:
             self.bottom_pieces.append(self.player)
             self.player = self.next_piece
             self.player.set_position(list(PIECE_STAGE_STARTING_POSITION))
             self.next_piece = Piece()
             self.bottom_pieces.check_rows()
             if self.player_oversteps_bottom_pieces():
-                self.game_goes_on = False
+                self.playing = False
+                self.game_over = True
 
     def bottom_pieces_call(self, number):
         """BottomPieces uses this method when it clears lines"""
@@ -318,7 +326,7 @@ class Game:
         pygame.display.set_caption(NAME_OF_THE_GAME)
         pygame.key.set_repeat(1,160)
         self.core = GameCore()
-        self.running = True
+        self.running = True # is the application running
         self.clock = Clock(self.core.score)
         self.font = pygame.font.SysFont("Arial", 22)
 
@@ -333,8 +341,10 @@ class Game:
 
     def draw_game(self):
         self.screen.fill((0, 0, 0))
-        if not self.core.game_goes_on:
+        if self.core.game_over:
             self.draw_game_over()
+        if self.core.paused:
+            self.draw_pause()
         if DRAW_SPOTLIGHT:
             self.draw_spotlight()
         self.draw_pieces()
@@ -365,6 +375,9 @@ class Game:
  
     def draw_game_over(self):
         self.render_text("GAME OVER", (BOARD_CENTER_X, 10.5), GAME_OVER_TEXT_COLOR)
+
+    def draw_pause(self):
+        self.render_text("PAUSE", (BOARD_CENTER_X, 10.5), PAUSE_TEXT_COLOR)
 
     
     def draw_next_piece(self):
@@ -407,11 +420,15 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             
-            if event.type == KEYDOWN and event.key in (K_r, K_RETURN):
-                self.__init__()
+            if event.type == KEYDOWN:
+                if event.key in (K_PAUSE, K_RETURN, K_p):
+                    if not self.core.game_over:
+                        self.core.set_paused()
+                    else:
+                        self.__init__()
                 
-            if self.core.game_goes_on:
-
+                
+            if self.core.playing:
                 if event.type == KEYDOWN:
                     if event.key == K_UP:
                         self.core.rotate_player()
@@ -421,6 +438,7 @@ class Game:
                         self.core.move_player( (1,0) )
                     elif event.key == K_LEFT:
                         self.core.move_player( (-1,0) )
+
                     elif event.key == K_SPACE:
                         if keys_pressed[K_RIGHT]:
                             self.core.move_piece_to_limit((1,0))
