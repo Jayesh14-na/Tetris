@@ -407,7 +407,6 @@ class Game:
     def draw_borders(self):
         stage_rect = Rect(coord_in_px(STAGE_TOP_LEFT), coord_in_px(STAGE_BOTTOM_RIGHT))
         pygame.draw.rect(self.screen, BORDER_COLOR, stage_rect, BORDER_WIDTH)
-
         right_area_top_left = BOARD_MARGIN
         right_area_bottom_right = (BOARD_WIDTH, STAGE_HEIGHT+1)
         right_area_rect = Rect(coord_in_px(right_area_top_left), coord_in_px(right_area_bottom_right))
