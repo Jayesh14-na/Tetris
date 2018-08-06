@@ -151,7 +151,7 @@ class Piece:
 
 
 class GameCore:
-    """Manages the interaction between the player and movement, margins, lower pieces, score, next piece and level."""
+    """Manages the interaction between the player and movement, margins, lower pieces, states, score, next piece and level."""
     def __init__(self, piece_name = None):
         self.playing = True
         self.paused = False
