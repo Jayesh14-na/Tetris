@@ -195,15 +195,14 @@ class GameCore:
             self.player.rotate_ccw()
 
     def change_player(self):
-        if self.playing:
-            self.bottom_pieces.append(self.player)
-            self.player = self.next_piece
-            self.player.set_position(list(PIECE_STAGE_STARTING_POSITION))
-            self.next_piece = Piece()
-            self.bottom_pieces.check_rows()
-            if self.player_oversteps_bottom_pieces():
-                self.playing = False
-                self.game_over = True
+        self.bottom_pieces.append(self.player)
+        self.player = self.next_piece
+        self.player.set_position(list(PIECE_STAGE_STARTING_POSITION))
+        self.next_piece = Piece()
+        self.bottom_pieces.check_rows()
+        if self.player_oversteps_bottom_pieces():
+            self.playing = False
+            self.game_over = True
 
     def bottom_pieces_call(self, number):
         """BottomPieces uses this method when it clears lines"""
