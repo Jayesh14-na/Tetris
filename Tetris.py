@@ -438,7 +438,6 @@ class Game:
                         self.core.move_player( (1,0) )
                     elif event.key == K_LEFT:
                         self.core.move_player( (-1,0) )
-
                     elif event.key == K_SPACE:
                         if keys_pressed[K_RIGHT]:
                             self.core.move_piece_to_limit((1,0))
