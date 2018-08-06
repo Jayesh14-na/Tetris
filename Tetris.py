@@ -426,7 +426,6 @@ class Game:
                     else:
                         self.__init__()
                 
-                
             if self.core.playing:
                 if event.type == KEYDOWN:
                     if event.key == K_UP:
