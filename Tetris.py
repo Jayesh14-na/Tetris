@@ -381,7 +381,7 @@ class Game:
     
     def draw_next_piece(self):
         self.render_text("NEXT PIECE", (BOARD_CENTER_X, 12.5), TITLE_COLOR)
-        self.draw_piece(self.core.next_piece)
+        
 
     def draw_piece(self, piece):
         size_rect = (BLOCK_SIZE, BLOCK_SIZE)
@@ -401,6 +401,7 @@ class Game:
 
     def draw_pieces(self):
         self.draw_piece(self.core.player)
+        self.draw_piece(self.core.next_piece)
         for piece in self.core.bottom_pieces:
             self.draw_piece(piece)
 
