@@ -11,6 +11,7 @@ class Game:
         self.playing = True
         self.paused = False
         self.game_over = False
+        self.running = true
         self.player = Piece(piece_name, list(PIECE_STAGE_STARTING_POSITION))
         self.player.offset_piece()
         self.next_piece = Piece()
@@ -20,7 +21,10 @@ class Game:
         self.event_handler = EventHandler(self)
     
     def run(self):
-        self.event_handler.run()
+        while self.running:
+            self.event_handler.clock.tick()
+            self.event_handler.handle_events()
+            self.draw.draw_game()
 
     def set_paused(self, pause = None):
         self.paused = pause if pause != None else not self.paused
