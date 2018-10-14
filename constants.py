@@ -3,10 +3,6 @@ from pygame.locals import USEREVENT
 NAME_OF_THE_GAME = "Tetris"
 BLOCK_SIZE = 30
 
-def coord_in_px(coord):
-    return (coord[0] * BLOCK_SIZE,
-            coord[1] * BLOCK_SIZE)
-
 DRAW_SPOTLIGHT = True # the spotlight is a guide the width of the player that extends to where it would fall.
 STAGE_WIDTH = 9 # stage is where the game takes place.
 STAGE_HEIGHT = 17
