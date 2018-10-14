@@ -8,14 +8,8 @@ class EventHandler:
     def __init__(self, game):
         pygame.key.set_repeat(1,160)
         self.game = game
-        self.running = True # is the application running
         self.clock = Clock(self.game.score)
 
-    def run(self):
-        while self.running:
-            self.clock.tick()
-            self.handle_events()
-            self.game.draw.draw_game()
 
     def tick(self):
         self.game.move_player( (0,1) )
@@ -24,7 +18,7 @@ class EventHandler:
         keys_pressed = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.running = False
+                self.game.running = False
             
             if event.type == KEYDOWN:
                 if event.key in (K_PAUSE, K_RETURN, K_p):
