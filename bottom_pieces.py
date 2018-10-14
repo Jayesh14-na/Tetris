@@ -2,9 +2,9 @@ from constants import *
 
 
 class BottomPieces(list):
-    def __init__(self, game_core):
+    def __init__(self, game):
         super(BottomPieces, self).__init__()
-        self.game_core = game_core
+        self.game = game
 
     def __contains__(self, element):
         if super(BottomPieces, self).__contains__(element):
@@ -30,7 +30,7 @@ class BottomPieces(list):
 
         lines_cleared = blocks_deleated // (STAGE_WIDTH + 1)
         if lines_cleared:
-            self.game_core.bottom_pieces_call(lines_cleared)
+            self.game.bottom_pieces_call(lines_cleared)
 
     def delete_row(self, row):
         blocks_deleated = 0
