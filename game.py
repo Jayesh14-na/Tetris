@@ -11,7 +11,7 @@ class Game:
         self.playing = True
         self.paused = False
         self.game_over = False
-        self.running = true
+        self.running = True
         self.player = Piece(piece_name, list(PIECE_STAGE_STARTING_POSITION))
         self.player.offset_piece()
         self.next_piece = Piece()
