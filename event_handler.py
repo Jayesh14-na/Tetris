@@ -10,7 +10,6 @@ class EventHandler:
         self.game = game
         self.clock = Clock(self.game.score)
 
-
     def tick(self):
         self.game.move_player( (0,1) )
 
