@@ -2,6 +2,9 @@ import pygame
 from pygame.locals import *
 from constants import *
 
+def coord_in_px(coord):
+    return [coord[0] * BLOCK_SIZE, coord[1] * BLOCK_SIZE]
+
 class DrawGame:
     def __init__(self, game):
         pygame.init()
