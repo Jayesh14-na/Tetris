@@ -1,3 +1,4 @@
+import pygame
 from constants import *
 from piece import Piece
 from draw_game import DrawGame
@@ -19,6 +20,7 @@ class Game:
         self.bottom_pieces = BottomPieces(self)
         self.draw = DrawGame(self)
         self.event_handler = EventHandler(self)
+        self.lower_piece_data = {n:int(48 - 2.4 * n) for n in range(21)} # TODO: explain
     
     def run(self):
         while self.running:
@@ -93,4 +95,9 @@ class Game:
             self.move_player(coord)
             if not has_advanced(old_position, self.player.position):
                 keep_moving = False
+    
+    def trigger_event_lower_piece(self):
+        event_lower_piece = pygame.event.Event(LOWER_PIECE_EVENT_ID)
+        pygame.event.post(event_lower_piece)
+
 
