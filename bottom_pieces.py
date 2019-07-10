@@ -5,7 +5,7 @@ class BottomPieces(list):
     def __init__(self, game):
         super(BottomPieces, self).__init__()
         self.game = game
-
+        
     def __contains__(self, element):
         if super(BottomPieces, self).__contains__(element):
             return True
